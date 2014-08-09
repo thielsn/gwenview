@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 
 // KDE
 #include <KDebug>
-#include <KIcon>
+#include <QIcon>
 
 // Local
 #include "zoomslider.h"
@@ -207,7 +207,7 @@ void ZoomWidget::setLockZoomButtonVisible(bool visible)
 
 void ZoomWidget::updateLockZoomButton()
 {
-    d->mLockZoomButton->setIcon(KIcon(d->mLockZoomButton->isChecked() ? "object-locked" : "object-unlocked"));
+    d->mLockZoomButton->setIcon(QIcon::fromTheme(d->mLockZoomButton->isChecked() ? "object-locked" : "object-unlocked"));
 }
 
 } // namespace
