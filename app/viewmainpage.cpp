@@ -622,10 +622,10 @@ DocumentView* ViewMainPage::documentView() const
 
 void ViewMainPage::openUrl(const QUrl &url)
 {
-    openUrls(QUrl::List() << url, url);
+    openUrls(QList<QUrl>() << url, url);
 }
 
-void ViewMainPage::openUrls(const QUrl::List& allUrls, const QUrl &currentUrl)
+void ViewMainPage::openUrls(const QList<QUrl>& allUrls, const QUrl &currentUrl)
 {
     DocumentView::Setup setup;
 
@@ -749,7 +749,7 @@ void ViewMainPage::trashView(DocumentView* view)
 {
     QUrl url = view->url();
     deselectView(view);
-    FileOperations::trash(QUrl::List() << url, this);
+    FileOperations::trash(QList<QUrl>() << url, this);
 }
 
 void ViewMainPage::deselectView(DocumentView* view)
