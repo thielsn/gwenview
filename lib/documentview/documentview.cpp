@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Cambridge, MA 02110-1301, USA
 #include <KDebug>
 #include <QIcon>
 #include <KLocale>
-#include <KUrl>
+#include <QUrl>
 
 // Local
 #include <lib/document/document.h>
@@ -376,7 +376,7 @@ void DocumentView::createAdapterForDocument()
     d->setCurrentAdapter(adapter);
 }
 
-void DocumentView::openUrl(const KUrl& url, const DocumentView::Setup& setup)
+void DocumentView::openUrl(const QUrl &url, const DocumentView::Setup& setup)
 {
     if (d->mDocument) {
         if (url == d->mDocument->url()) {
@@ -386,7 +386,7 @@ void DocumentView::openUrl(const KUrl& url, const DocumentView::Setup& setup)
     }
     d->mSetup = setup;
     d->mDocument = DocumentFactory::instance()->load(url);
-    connect(d->mDocument.data(), SIGNAL(busyChanged(KUrl,bool)), SLOT(slotBusyChanged(KUrl,bool)));
+    connect(d->mDocument.data(), SIGNAL(busyChanged(QUrl,bool)), SLOT(slotBusyChanged(QUrl,bool)));
 
     if (d->mDocument->loadingState() < Document::KindDetermined) {
         MessageViewAdapter* messageViewAdapter = qobject_cast<MessageViewAdapter*>(d->mAdapter.data());
@@ -394,7 +394,7 @@ void DocumentView::openUrl(const KUrl& url, const DocumentView::Setup& setup)
             messageViewAdapter->setInfoMessage(QString());
         }
         d->showLoadingIndicator();
-        connect(d->mDocument.data(), SIGNAL(kindDetermined(KUrl)),
+        connect(d->mDocument.data(), SIGNAL(kindDetermined(QUrl)),
                 SLOT(finishOpenUrl()));
     } else {
         QMetaObject::invokeMethod(this, "finishOpenUrl", Qt::QueuedConnection);
@@ -404,7 +404,7 @@ void DocumentView::openUrl(const KUrl& url, const DocumentView::Setup& setup)
 
 void DocumentView::finishOpenUrl()
 {
-    disconnect(d->mDocument.data(), SIGNAL(kindDetermined(KUrl)),
+    disconnect(d->mDocument.data(), SIGNAL(kindDetermined(QUrl)),
                this, SLOT(finishOpenUrl()));
     GV_RETURN_IF_FAIL(d->mDocument->loadingState() >= Document::KindDetermined);
 
@@ -414,7 +414,7 @@ void DocumentView::finishOpenUrl()
     }
     createAdapterForDocument();
 
-    connect(d->mDocument.data(), SIGNAL(loadingFailed(KUrl)),
+    connect(d->mDocument.data(), SIGNAL(loadingFailed(QUrl)),
             SLOT(slotLoadingFailed()));
     d->mAdapter->setDocument(d->mDocument);
     d->updateCaption();
@@ -602,7 +602,7 @@ void DocumentView::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     }
 }
 
-void DocumentView::slotBusyChanged(const KUrl&, bool busy)
+void DocumentView::slotBusyChanged(const QUrl&, bool busy)
 {
     if (busy) {
         d->showLoadingIndicator();
@@ -659,10 +659,10 @@ Document::Ptr DocumentView::document() const
     return d->mDocument;
 }
 
-KUrl DocumentView::url() const
+QUrl DocumentView::url() const
 {
     Document::Ptr doc = d->mDocument;
-    return doc ? doc->url() : KUrl();
+    return doc ? doc->url() : QUrl();
 }
 
 void DocumentView::emitHudDeselectClicked()

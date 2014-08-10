@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class QModelIndex;
 
-class KUrl;
+class QUrl;
 
 namespace Gwenview
 {
@@ -45,7 +45,7 @@ public:
     /**
      * Defines the url to display when the window is shown for the first time.
      */
-    void setInitialUrl(const KUrl&);
+    void setInitialUrl(const QUrl&);
 
     void startSlideShow();
 
@@ -61,7 +61,7 @@ public Q_SLOTS:
     /**
      * Go to url, without changing current mode
      */
-    void goToUrl(const KUrl&);
+    void goToUrl(const QUrl&);
 
 Q_SIGNALS:
     void viewModeChanged();
@@ -82,10 +82,10 @@ protected:
 
 private Q_SLOTS:
     void setActiveViewModeAction(QAction* action);
-    void openDirUrl(const KUrl&);
+    void openDirUrl(const QUrl&);
     void slotThumbnailViewIndexActivated(const QModelIndex&);
 
-    void slotStartMainPageUrlSelected(const KUrl&);
+    void slotStartMainPageUrlSelected(const QUrl&);
 
     void goUp();
     void toggleSideBar(bool visible);
@@ -96,7 +96,7 @@ private Q_SLOTS:
     void slotDirListerCompleted();
 
     void slotSelectionChanged();
-    void slotCurrentDirUrlChanged(const KUrl& url);
+    void slotCurrentDirUrlChanged(const QUrl &url);
 
     void goToPrevious();
     void goToNext();
@@ -114,7 +114,7 @@ private Q_SLOTS:
     void openFile();
     void reload();
 
-    void showDocumentInFullScreen(const KUrl&);
+    void showDocumentInFullScreen(const QUrl&);
 
     void showConfigDialog();
     void loadConfig();
