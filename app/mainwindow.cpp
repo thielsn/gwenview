@@ -987,7 +987,7 @@ void MainWindow::goUp()
 {
     if (d->mCurrentMainPageId == BrowseMainPageId) {
         QUrl url = d->mContextManager->currentDirUrl();
-        url = url.upUrl();
+        url = KIO::upUrl(url);
         openDirUrl(url);
     } else {
         d->mBrowseAction->trigger();
@@ -1097,7 +1097,7 @@ void MainWindow::slotPartCompleted()
     QUrl dirUrl = url;
     dirUrl = dirUrl.adjusted(QUrl::RemoveFilename);
     dirUrl.setPath(dirUrl.path() + QString());
-    if (dirUrl.equals(d->mContextManager->currentDirUrl(), QUrl::CompareWithoutTrailingSlash)) {
+    if (dirUrl.matches(d->mContextManager->currentDirUrl(), QUrl::StripTrailingSlash)) {
         QModelIndex index = d->mDirModel->indexForUrl(url);
         QItemSelectionModel* selectionModel = d->mThumbnailView->selectionModel();
         if (index.isValid() && !selectionModel->isSelected(index)) {
